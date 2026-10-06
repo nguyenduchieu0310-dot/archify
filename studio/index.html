@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Archify Studio</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">A</span><div><strong>ARCHIFY</strong><small>LOCAL STUDIO</small></div></div>
+      <button class="new-button" id="new-project" type="button"><span>＋</span> Bản vẽ mới</button>
+      <div class="sidebar-heading"><span>Lịch sử bản vẽ</span><span id="project-count">0</span></div>
+      <input id="search" class="search" type="search" placeholder="Tìm bản vẽ..." aria-label="Tìm bản vẽ">
+      <nav id="projects" class="projects" aria-label="Danh sách bản vẽ"></nav>
+      <div class="sidebar-foot"><span class="status-dot"></span> Lưu cục bộ trên máy</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">WORKSPACE / ARCHITECTURE</div><h1 id="page-title">Tạo bản vẽ mới</h1></div>
+        <div class="top-actions"><span class="plan-pill">Không cần API key</span><a href="https://github.com/tt-a1i/archify" target="_blank" rel="noreferrer">Tài liệu ↗</a></div>
+      </header>
+
+      <div class="workspace">
+        <section class="composer" aria-label="Nhập tài liệu">
+          <div class="section-title"><span class="step">01</span><div><h2>Nguồn đầu vào</h2><p>Thêm tài liệu hoặc mô tả hệ thống cần vẽ.</p></div></div>
+          <form id="create-form">
+            <label for="title">Tên bản vẽ</label>
+            <input id="title" name="title" maxlength="120" required placeholder="Ví dụ: Kiến trúc hệ thống bán hàng">
+
+            <div class="mode-label">Cách tạo</div>
+            <div class="segmented" role="group" aria-label="Cách tạo sơ đồ">
+              <button type="button" class="active" data-mode="manual">{ } Nhập JSON</button>
+              <button type="button" data-mode="codex">✨ Tạo bằng Codex</button>
+            </div>
+
+            <div id="codex-fields" hidden>
+              <label for="instructions">Anh muốn thể hiện điều gì?</label>
+              <textarea id="instructions" rows="5" placeholder="Mô tả thành phần chính, luồng dữ liệu, các nhánh quan trọng..."></textarea>
+              <label for="file" class="dropzone" id="dropzone">
+                <span class="upload-icon">↥</span>
+                <strong id="file-label">Chọn hoặc kéo tài liệu vào đây</strong>
+                <small>PDF, Word (.docx), TXT hoặc Markdown · tối đa 12 MB</small>
+              </label>
+              <input id="file" type="file" accept=".pdf,.docx,.txt,.md" hidden>
+              <div class="hint">Codex dùng hạn mức của gói hiện có và có thể dùng credits theo cài đặt tài khoản. Chế độ JSON bên cạnh không gọi AI.</div>
+            </div>
+
+            <div id="manual-fields">
+              <label for="manual-json">JSON Archify</label>
+              <div class="json-tools"><button id="copy-prompt" type="button">Sao chép yêu cầu cho ChatGPT</button><a href="/api/template" download="archify-template.json">Tải JSON mẫu</a></div>
+              <label for="json-file" class="json-upload" id="json-dropzone">↥ &nbsp; Chọn hoặc kéo file .json từ ChatGPT Web vào đây</label>
+              <input id="json-file" type="file" accept=".json,application/json" hidden>
+              <textarea id="manual-json" class="code-input" rows="13" spellcheck="false" placeholder='{"schema_version":1,"diagram_type":"architecture",...}'></textarea>
+              <div class="hint">Chọn file hoặc dán JSON. Studio kiểm tra và dựng hoàn toàn trên máy, không gọi AI.</div>
+            </div>
+
+            <button id="generate" class="generate" type="submit">Tạo bản vẽ <span>→</span></button>
+            <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+          </form>
+        </section>
+
+        <section class="result" aria-label="Bản vẽ và lịch sử phiên bản">
+          <div class="result-header"><div><div class="eyebrow">PREVIEW</div><h2>Bản vẽ</h2></div><div id="version-actions" class="result-actions" hidden><button id="edit-version" type="button">Sửa từ bản này</button><a id="open-diagram" target="_blank" rel="noreferrer">Mở toàn màn hình ↗</a><a id="download-json" download>JSON nguồn ↓</a></div></div>
+          <div id="empty-preview" class="empty-preview"><div class="empty-illustration"><span>◇</span><i></i><span>□</span><i></i><span>○</span></div><h3>Bản vẽ sẽ xuất hiện ở đây</h3><p>Nhập mô tả hoặc tài liệu ở bên trái, rồi bấm “Tạo bản vẽ”.</p></div>
+          <iframe id="preview" title="Xem sơ đồ Archify" sandbox="allow-scripts allow-downloads" hidden></iframe>
+          <div class="versions-header"><div><span class="step">02</span><strong>Các phiên bản</strong></div><span id="version-count">0 phiên bản</span></div>
+          <div id="versions" class="versions"><p class="no-versions">Chưa có phiên bản nào.</p></div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -6,3 +6,4 @@ node_modules/
 /.impeccable/
 __pycache__/
 *.py[cod]
+/.archify/

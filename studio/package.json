@@ -1,0 +1,14 @@
+{
+  "name": "archify-local-studio",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test test/studio.test.mjs"
+  },
+  "dependencies": {
+    "mammoth": "1.13.0",
+    "pdf-parse": "1.1.1"
+  }
+}
